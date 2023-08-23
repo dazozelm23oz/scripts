@@ -1,0 +1,283 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Values
+---------------------------------------------------------------------------------------------------------------------------------------
+_G.AutoRebirth = false -- Switch on and off auto rebirth
+_G.AutoClicking = false -- Switch on and off auto click
+_G.AutoHatch = false -- Switch on and off auto hatch
+_G.upgradepet = false -- Switch on and off auto upgrade
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Shortcut 
+---------------------------------------------------------------------------------------------------------------------------------------
+local RemotePath = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices;
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Clicking
+---------------------------------------------------------------------------------------------------------------------------------------
+function AutoClicking()
+    spawn(function()
+        while _G.AutoClicking do
+            local args = {1}
+            RemotePath.ClickService.Click:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Rebirth
+---------------------------------------------------------------------------------------------------------------------------------------
+function AutoRebirth(rebirthamount)
+    spawn(function()
+        while _G.AutoRebirth do
+            local args = {[1] = rebirthamount}
+            RemotePath.RebirthService.BuyRebirths:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Hatch
+---------------------------------------------------------------------------------------------------------------------------------------
+function AutoHatch(HatchPrice)
+    spawn(function()
+        while wait() do
+            if not _G.AutoHatch then break end;
+            RemotePath.EggService.Purchase:FireServer(HatchPrice)
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Upgrade Pet Storage
+---------------------------------------------------------------------------------------------------------------------------------------
+function upgradepet()
+    spawn(function()
+        while _G.upgradepet do
+            local args = {[1] = "PetStorage"}
+            RemotePath.UpgradeService.BuyUpgrade:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+function getCurrentPlayerPOS()
+---------------------------------------------------------------------------------------------------------------------------------------
+    local plyr = game.Players.LocalPlayer
+    if plyr.character then
+        return plyr.character.HumanoidRootPart.Position
+    end
+    return false
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+function teleportTO(PlaceCFrame)
+---------------------------------------------------------------------------------------------------------------------------------------
+    local plyr = game.Players.LocalPlayer
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = PlaceCFrame
+    end
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+function teleportworld(world)
+---------------------------------------------------------------------------------------------------------------------------------------
+    if workspace.Worlds:FindFirstChild(world) then
+       teleportTO(workspace.Worlds[world].Teleport.CFrame)
+    end
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Values
+---------------------------------------------------------------------------------------------------------------------------------------
+_G.AutoRebirth = true -- Switch on and off auto rebirth
+_G.AutoClicking = true -- Switch on and off auto click
+_G.AutoHatch = true -- Switch on and off auto hatch
+_G.upgradepet = true -- Switch on and off auto upgrade
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Shortcut 
+---------------------------------------------------------------------------------------------------------------------------------------
+local RemotePath = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Clicking
+---------------------------------------------------------------------------------------------------------------------------------------
+function AutoClicking()
+    spawn(function()
+        while _G.AutoClicking do
+            local args = {1}
+            RemotePath.ClickService.Click:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Rebirth
+---------------------------------------------------------------------------------------------------------------------------------------
+function AutoRebirth(rebirthamount)
+    spawn(function()
+        while _G.AutoRebirth do
+            local args = {[1] = rebirthamount}
+            RemotePath.RebirthService.BuyRebirths:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Hatch
+---------------------------------------------------------------------------------------------------------------------------------------
+function AutoHatch(HatchPrice)
+    spawn(function()
+        while wait() do
+            if not _G.AutoHatch then break end;
+            RemotePath.EggService.Purchase:FireServer(HatchPrice)
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Auto Upgrade Pet Storage
+---------------------------------------------------------------------------------------------------------------------------------------
+function upgradepet()
+    spawn(function()
+        while _G.upgradepet do
+            local args = {[1] = "PetStorage"}
+            RemotePath.UpgradeService.BuyUpgrade:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+function getCurrentPlayerPOS()
+---------------------------------------------------------------------------------------------------------------------------------------
+    local plyr = game.Players.LocalPlayer
+    if plyr.character then
+        return plyr.character.HumanoidRootPart.Position
+    end
+    return false
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+function teleportTO(PlaceCFrame)
+---------------------------------------------------------------------------------------------------------------------------------------
+    local plyr = game.Players.LocalPlayer
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = PlaceCFrame
+    end
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+function teleportworld(world)
+---------------------------------------------------------------------------------------------------------------------------------------
+    if workspace.Worlds:FindFirstChild(world) then
+       teleportTO(workspace.Worlds[world].Teleport.CFrame)
+    end
+end
+
+---------------------------------------------------------------------------------------------------------------------------------------
+--UI
+---------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------------
+--Tabs
+---------------------------------------------------------------------------------------------------------------------------------------
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("Clicking Madness") 
+
+local b = w:CreateFolder("Farming")
+
+local c = w:CreateFolder("Pet")
+
+local d = w:CreateFolder("Worlds")
+---------------------------------------------------------------------------------------------------------------------------------------
+--toggles
+---------------------------------------------------------------------------------------------------------------------------------------
+b:Toggle("AutoFarm",function(bool)
+    _G.AutoClicking = bool
+    print('AUtoFarm is', bool)
+    if bool then
+        AutoClicking()
+    end
+end)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+b:Toggle("AutoRebirth",function(bool)
+    _G.AutoRebirth = bool
+    print('AutoRebirth is', bool)
+    if bool then
+        AutoRebirth(1000)
+    end
+end)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+c:Toggle("AutoHatch",function(bool)
+    _G.AutoHatch = bool
+    print('AutoHatch is', bool)
+    if bool then
+        AutoHatch('basic')
+    end
+end)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+d:Button("Teleport To Desert",function()
+    teleportworld('Desert')
+end)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+--Destroy Gui
+---------------------------------------------------------------------------------------------------------------------------------------
+b:DestroyGui()
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+-- b:Label("Pretty Useless NGL",{
+--     TextSize = 25; -- Self Explaining
+--     TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+--     BgColor = Color3.fromRGB(69,69,69); -- Self Explaining
+    
+-- }) 
+
+-- b:Button("Button",function()
+--     print("Elym Winning")
+-- end)
+
+-- b:Toggle("Toggle",function(bool)
+--     shared.toggle = bool
+--     print(shared.toggle)
+-- end)
+
+-- b:Slider("Slider",{
+--     min = 10; -- min value of the slider
+--     max = 50; -- max value of the slider
+--     precise = true; -- max 2 decimals
+-- },function(value)
+--     print(value)
+-- end)
+
+-- b:Dropdown("Dropdown",{"A","B","C"},true,function(mob) --true/false, replaces the current title "Dropdown" with the option that t
+--     print(mob)
+-- end)
+
+-- b:Bind("Bind",Enum.KeyCode.C,function() --Default bind
+--     print("Yes")
+-- end)
+
+-- b:ColorPicker("ColorPicker",Color3.fromRGB(255,0,0),function(color) --Default color
+--     print(color)
+-- end)
+
+-- b:Box("Box","number",function(value) -- "number" or "string"
+--     print(value)
+-- end)
+
